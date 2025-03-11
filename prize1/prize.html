@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>恭喜你！來領獎吧！</title>
+    <style>
+        /* 設置 HTML 和 Body 的高度和寬度為 100% */
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        /* 設置 GIF 容器的高度和寬度為 100% */
+        .gif-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* 設置 GIF 的寬度和高度為 100%，以便 GIF 跟隨容器大小縮放 */
+        .gif-container img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* 適應 GIF 容器的大小 */
+        }
+    </style>
+    <script>
+        // 用來偵測是否已經訪問過此頁面
+        window.onload = function() {
+            var pageKey = window.location.pathname; // 取得當前頁面的路徑作為 key
+            if (localStorage.getItem(pageKey + "_visited") === "2") {
+                // 如果已經點擊過兩次或以上，顯示 2.jpg
+                document.body.innerHTML = '<div class="gif-container"><img src="2.jpg" alt="You have already claimed your prize"></div>';
+            }
+        }
+
+        // 點擊 GIF 後進行跳轉或顯示 2.jpg
+        function redirectAndClose() {
+            var pageKey = window.location.pathname; // 取得當前頁面的路徑作為 key
+            var visitCount = localStorage.getItem(pageKey + "_visited");
+
+            if (!visitCount) {
+                // 第一次點擊，跳轉到目標頁面
+                localStorage.setItem(pageKey + "_visited", "1"); // 設置第一次點擊標記
+                window.location.href = "https://u.lin.ee/VEkWvFH";
+            } else if (visitCount === "1") {
+                // 第二次點擊，顯示 2.jpg
+                localStorage.setItem(pageKey + "_visited", "2"); // 設置第二次點擊標記
+                document.body.innerHTML = '<div class="gif-container"><img src="2.jpg" alt="You have already claimed your prize"></div>';
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="gif-container">
+        <!-- 點擊 GIF 後觸發跳轉和標記 -->
+        <img src="1.jpg" alt="Clickable GIF" onclick="redirectAndClose()">
+    </div>
+</body>
+</html>
